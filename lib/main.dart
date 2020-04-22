@@ -14,30 +14,24 @@ class FlutterBook extends StatelessWidget {
           primarySwatch: Colors.blue,
         ),
         home: DefaultTabController(
-          length: 4,
-          child: Scaffold(
-            appBar: AppBar(
-              title: Text('FlutterBook'),
-              bottom: TabBar(
-                tabs: [
-                  Tab(icon: Icon(Icons.date_range), text: 'Appointments'),
-                  Tab(icon: Icon(Icons.contacts), text: 'Contacts'),
-                  Tab(icon: Icon(Icons.note), text: 'Notes'),
-                  Tab(icon: Icon(Icons.assignment_turned_in), text: 'Tasks'),
-                ]
-              )
-            ),
-            body: TabBarView(
-                children: [
+            length: 4,
+            child: Scaffold(
+                appBar: AppBar(
+                    title: Text('FlutterBook'),
+                    bottom: TabBar(tabs: [
+                      Tab(icon: Icon(Icons.date_range), text: 'Appointments'),
+                      Tab(icon: Icon(Icons.contacts), text: 'Contacts'),
+                      Tab(icon: Icon(Icons.note), text: 'Notes'),
+                      Tab(
+                          icon: Icon(Icons.assignment_turned_in),
+                          text: 'Tasks'),
+                    ])),
+                body: TabBarView(children: [
                   Dummy('Appointments'),
                   Dummy('Contacts'),
                   Notes(),
                   Tasks(),
-                ]
-            )
-          )
-      )
-    );
+                ]))));
   }
 }
 

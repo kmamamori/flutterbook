@@ -4,9 +4,9 @@ import 'NotesDBWorker.dart';
 import 'NotesModel.dart';
 
 class NotesEntry extends StatelessWidget {
-
   final TextEditingController _titleEditingController = TextEditingController();
-  final TextEditingController _contentEditingController = TextEditingController();
+  final TextEditingController _contentEditingController =
+      TextEditingController();
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
@@ -22,30 +22,23 @@ class NotesEntry extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScopedModelDescendant<NotesModel>(
-          builder: (BuildContext context, Widget child, NotesModel model) {
+        builder: (BuildContext context, Widget child, NotesModel model) {
+      // Correction: added for "editing" an existing note
+      _titleEditingController.text = model.entityBeingEdited?.title;
+      _contentEditingController.text = model.entityBeingEdited?.content;
 
-            // Correction: added for "editing" an existing note
-            _titleEditingController.text = model.entityBeingEdited?.title;
-            _contentEditingController.text = model.entityBeingEdited?.content;
-
-            return Scaffold(
-              bottomNavigationBar: Padding(
-                padding: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
-                child: _buildControlButtons(context, model)
-              ),
-              body: Form(
-                key: _formKey,
-                child: ListView(
-                  children: [
-                    _buildTitleListTile(),
-                    _buildContentListTile(),
-                    _buildColorListTile(context)
-                  ]
-                )
-              )
-            );
-          }
-      );
+      return Scaffold(
+          bottomNavigationBar: Padding(
+              padding: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+              child: _buildControlButtons(context, model)),
+          body: Form(
+              key: _formKey,
+              child: ListView(children: [
+                _buildTitleListTile(),
+                _buildContentListTile(),
+                _buildColorListTile(context)
+              ])));
+    });
   }
 
   ListTile _buildTitleListTile() {
@@ -59,9 +52,8 @@ class NotesEntry extends StatelessWidget {
               return 'Please enter a title';
             }
             return null;
-            },
-        )
-    );
+          },
+        ));
   }
 
   ListTile _buildContentListTile() {
@@ -77,9 +69,7 @@ class NotesEntry extends StatelessWidget {
                 return 'Please enter content';
               }
               return null;
-            }
-        )
-    );
+            }));
   }
 
   ListTile _buildColorListTile(BuildContext context) {
@@ -87,10 +77,10 @@ class NotesEntry extends StatelessWidget {
     return ListTile(
         leading: Icon(Icons.color_lens),
         title: Row(
-            children: colors.expand((c) =>
-            [_buildColorBox(context, c), Spacer()]).toList()..removeLast()
-        )
-    );
+            children: colors
+                .expand((c) => [_buildColorBox(context, c), Spacer()])
+                .toList()
+                  ..removeLast()));
   }
 
   GestureDetector _buildColorBox(BuildContext context, String color) {
@@ -99,16 +89,15 @@ class NotesEntry extends StatelessWidget {
         child: Container(
             decoration: ShapeDecoration(
                 shape: Border.all(width: 16, color: colorValue) +
-                    Border.all(width: 4, color: notesModel.color == color ?
-                    colorValue: Theme.of(context).canvasColor
-                    )
-            )
-        ),
+                    Border.all(
+                        width: 4,
+                        color: notesModel.color == color
+                            ? colorValue
+                            : Theme.of(context).canvasColor))),
         onTap: () {
           notesModel.entityBeingEdited.color = color;
           notesModel.setColor(color);
-        }
-    );
+        });
   }
 
   Row _buildControlButtons(BuildContext context, NotesModel model) {
@@ -127,8 +116,7 @@ class NotesEntry extends StatelessWidget {
           _save(context, notesModel);
         },
       )
-    ]
-    );
+    ]);
   }
 
   void _save(BuildContext context, NotesModel model) async {
@@ -150,12 +138,11 @@ class NotesEntry extends StatelessWidget {
     notesModel.loadData(NotesDBWorker.db);
 
     model.setStackIndex(0);
-    Scaffold.of(context).showSnackBar(
-        SnackBar(
-            backgroundColor: Colors.green,
-            duration: Duration(seconds: 2), content: Text('Note saved'),
-        )
-    );
+    Scaffold.of(context).showSnackBar(SnackBar(
+      backgroundColor: Colors.green,
+      duration: Duration(seconds: 2),
+      content: Text('Note saved'),
+    ));
   }
 
   Color _toColor(String color) {
