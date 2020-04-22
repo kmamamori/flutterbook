@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_book/notes/Notes.dart';
+import 'package:flutterbook/notes/Notes.dart';
 import 'tasks/Tasks.dart';
 
 void main() => runApp(FlutterBook());
