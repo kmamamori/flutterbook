@@ -1,9 +1,19 @@
 import 'package:flutter/material.dart';
 import 'notes/Notes.dart';
+import 'package:path_provider/path_provider.dart';
 import 'appointments/Appointments.dart';
+import 'contacts/Avatar.dart';
+import 'contacts/Contacts.dart';
 import 'tasks/Tasks.dart';
 
-void main() => runApp(FlutterBook());
+void main() {
+  startMeUp() async {
+    WidgetsFlutterBinding.ensureInitialized();
+    Avatar.docsDir = await getApplicationDocumentsDirectory();
+    runApp(FlutterBook());
+  }
+  startMeUp();
+}
 
 class FlutterBook extends StatelessWidget {
   @override
@@ -31,7 +41,7 @@ class FlutterBook extends StatelessWidget {
             body: TabBarView(
                 children: [
                   Appointments(),
-                  Dummy('Contacts'),
+                  Contacts(),
                   Notes(),
                   Tasks(),
                 ]
@@ -39,16 +49,5 @@ class FlutterBook extends StatelessWidget {
           )
       )
     );
-  }
-}
-
-class Dummy extends StatelessWidget {
-  final String _title;
-
-  Dummy(this._title);
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(child: Text(_title));
   }
 }
