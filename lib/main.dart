@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutterbook/notes/Notes.dart';
+import 'notes/Notes.dart';
+import 'appointments/Appointments.dart';
 import 'tasks/Tasks.dart';
 
 void main() => runApp(FlutterBook());
@@ -14,24 +15,30 @@ class FlutterBook extends StatelessWidget {
           primarySwatch: Colors.blue,
         ),
         home: DefaultTabController(
-            length: 4,
-            child: Scaffold(
-                appBar: AppBar(
-                    title: Text('Ken Amamori'),
-                    bottom: TabBar(tabs: [
-                      Tab(icon: Icon(Icons.date_range), text: 'Appointments'),
-                      Tab(icon: Icon(Icons.contacts), text: 'Contacts'),
-                      Tab(icon: Icon(Icons.note), text: 'Notes'),
-                      Tab(
-                          icon: Icon(Icons.assignment_turned_in),
-                          text: 'Tasks'),
-                    ])),
-                body: TabBarView(children: [
-                  Dummy('Appointments'),
+          length: 4,
+          child: Scaffold(
+            appBar: AppBar(
+              title: Text('FlutterBook'),
+              bottom: TabBar(
+                tabs: [
+                  Tab(icon: Icon(Icons.date_range), text: 'Appointments'),
+                  Tab(icon: Icon(Icons.contacts), text: 'Contacts'),
+                  Tab(icon: Icon(Icons.note), text: 'Notes'),
+                  Tab(icon: Icon(Icons.assignment_turned_in), text: 'Tasks'),
+                ]
+              )
+            ),
+            body: TabBarView(
+                children: [
+                  Appointments(),
                   Dummy('Contacts'),
                   Notes(),
                   Tasks(),
-                ]))));
+                ]
+            )
+          )
+      )
+    );
   }
 }
 
