@@ -28,7 +28,7 @@ class FlutterBook extends StatelessWidget {
           length: 4,
           child: Scaffold(
             appBar: AppBar(
-              title: Text('FlutterBook'),
+              title: Text('Ken Amamori'),
               bottom: TabBar(
                 tabs: [
                   Tab(icon: Icon(Icons.date_range), text: 'Appointments'),
